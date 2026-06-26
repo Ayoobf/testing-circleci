@@ -1,6 +1,10 @@
 version: 2.1
 # Goal: 
 
+parameters:
+  run-every-5:
+    type: boolean
+    default: false
 
 jobs:
   build_h:
@@ -41,6 +45,7 @@ jobs:
           command: echo $SECRET1
         
 workflows:
-  build a hello world: 
+  every-5:
+    when: << pipeline.parameters.run-every-5 >>  
     jobs:
       - build_h
