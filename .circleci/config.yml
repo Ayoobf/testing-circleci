@@ -33,7 +33,7 @@ jobs:
       - save_cache:
           name: "Save database"
           paths:
-            - ~/.cvdupdate/database
+            - ~/.cvdupdate/
           key: clamav-db-{{ epoch }} 
           when: on_success
       - run:
