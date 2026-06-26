@@ -16,7 +16,7 @@ jobs:
           name: "Get last database run"
           key: clamav-db-  
       - run: echo "THE VERSION IS \n" 
-      - run: jq '."dbs"["daily.cvd"]["local version"]' ~/.cvdupdate/state.json
+      - run: jq '."dbs"["daily.cvd"]["local version"]' ~/.cvdupdate/state.json > /dev/null 2>&1
       - run:
           name: "Saying hello"
           command: echo "Hello $NAME 2"
