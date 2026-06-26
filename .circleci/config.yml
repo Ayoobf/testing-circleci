@@ -12,12 +12,9 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: "set todays date"
-          command: export TODAYS_DATE=date +%F
       - restore_cache:
           name: "Get last database run"
-          key: clamav-db-{{  }}
+          key: clamav-db-  
       - run:
           name: "Saying hello"
           command: echo "Hello $NAME 2"
@@ -27,12 +24,19 @@ jobs:
       - run:
           name: "pulling database"
           command: cvd update
+      - run:
+          name: "Download Jfrog CLI"
+          command: curl -fL https://install-cli.jfrog.io | sh
+      - run: echo "curl"
       - save_cache:
           name: "Save database"
           paths:
             - ~/.cvdupdate/database
-          key: clamav-db-{{ $TODAYS_DATE }} 
+          key: clamav-db-{{ epoch }} 
           when: on_success
+      - run:
+          name: Testing project secret1
+          command: echo $SECRET1
         
 workflows:
   build a hello world: 
