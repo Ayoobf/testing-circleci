@@ -31,7 +31,7 @@ jobs:
           command: curl -fL https://install-cli.jfrog.io | sh
       - run: echo "curl"
       - save_cache:
-          name: "Save database"
+          name: "Save databasee"
           paths:
             - ~/.cvdupdate/
           key: clamav-db-{{ epoch }} 
