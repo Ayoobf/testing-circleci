@@ -1,25 +1,37 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/reference/configuration-reference
 version: 2.1
+# Goal: 
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
+
 jobs:
-  say-hello:
+  build_h:
     docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+      - image: cimg/python:3.14
+
+    environment:
+      NAME: Ayoob
 
     steps:
-      # Checkout the code as the first step.
       - checkout
+      - restore_cache:
+          name: "Get last database run"
+          key: clamav-db-$TEST
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
+          name: "Saying hello"
+          command: echo "Hello $NAME 2"
+      - run:
+          name: "Installing Clamav"
+          command: pip install cvdupdate 
+      - run:
+          name: "pulling database"
+          command: cvd update
+      - save_cache:
+          name: "Save database"
+          paths:
+            - ~/.cvdupdate/database
+          key: clamav-db-{{ epoch }} 
+          when: on_success
+        
 workflows:
-  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  build a hello world: 
     jobs:
-      - say-hello
+      - build_h
