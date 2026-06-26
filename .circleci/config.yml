@@ -12,9 +12,12 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: "set todays date"
+          command: export TODAYS_DATE=date +%F
       - restore_cache:
           name: "Get last database run"
-          key: clamav-db-$TEST
+          key: clamav-db-{{  }}
       - run:
           name: "Saying hello"
           command: echo "Hello $NAME 2"
@@ -28,7 +31,7 @@ jobs:
           name: "Save database"
           paths:
             - ~/.cvdupdate/database
-          key: clamav-db-{{ epoch }} 
+          key: clamav-db-{{ $TODAYS_DATE }} 
           when: on_success
         
 workflows:
